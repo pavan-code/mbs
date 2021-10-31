@@ -42,13 +42,37 @@ public class CustomerService {
 		body.put("data", c.toString());
 		return new ResponseEntity<>(body, HttpStatus.CREATED);
 	}
+	public ResponseEntity<Map<String, String>> checkValid(String aadhar) {
+		Customer c = customerRepo.findByAadharNumber(aadhar);
+		if(c != null) {
+			body.put(message, "Customer has registered with Aadhar: " + aadhar);
+			body.put(status, "true");
+			body.put(statusCode, "302");
+			body.put("data", c.toString());
+			return new ResponseEntity<>(body, HttpStatus.FOUND);
+		} else {
+			body.put(message, "Customer not found with Aadhar: " + aadhar);
+			body.put(status, "false");
+			body.put(statusCode, "404");
+			body.put("data", null);
+			return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+		}
+	}
 	public ResponseEntity<Map<String, String>> getCustomer(int id) {
 		Optional<Customer> c = customerRepo.findById(id);
-		body.put(message, "Customer details found");
-		body.put(status, "true");
-		body.put(statusCode, "302");
-		body.put("data", c.toString());
-		return new ResponseEntity<>(body, HttpStatus.FOUND);
+		if(c.isPresent()) {
+			body.put(message, "Customer details found");
+			body.put(status, "true");
+			body.put(statusCode, "302");
+			body.put("data", c.get().toString());
+			return new ResponseEntity<>(body, HttpStatus.FOUND);			
+		} else {
+			body.put(message, "Customer details not found with id: " + id);
+			body.put(status, "false");
+			body.put(statusCode, "404");
+			body.put("data", null);
+			return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+		}
 	}
 	public ResponseEntity<Map<String, String>> getCustomers() {
 		List<Customer> customers = customerRepo.findByType("customer");		

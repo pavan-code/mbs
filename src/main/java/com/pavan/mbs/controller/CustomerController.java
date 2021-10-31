@@ -29,6 +29,11 @@ public class CustomerController {
 		return customerService.getCustomer(id);				
 	}
 	
+	@GetMapping("/customer/checkValid/{aadhar}")
+	public ResponseEntity<Map<String, String>> validate(@PathVariable String aadhar) {
+		return customerService.checkValid(aadhar);
+	}
+	
 	@GetMapping("/customers") 
 	public ResponseEntity<Map<String, String>> getCustomers() {
 		return customerService.getCustomers();
