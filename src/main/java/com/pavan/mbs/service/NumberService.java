@@ -25,6 +25,15 @@ public class NumberService {
 
 	Map<String, String> body = new HashMap<>();
 
+	public ResponseEntity<Map<String, String>> addNumbers(List<Numbers> numbers) {
+		List<Numbers> n = numberRepo.saveAll(numbers);
+		body.put(message, "Mobile numbers added Successfully");
+		body.put(status, "true");
+		body.put(statusCode, "201");
+		body.put("data", n.toString());
+		return new ResponseEntity<>(body, HttpStatus.CREATED);
+	}
+	
 	public ResponseEntity<Map<String, String>> addNumber(Numbers number) {
 		Numbers n = numberRepo.save(number);
 		body.put(message, "Mobile number addedd Successfully");

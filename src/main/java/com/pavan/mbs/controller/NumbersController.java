@@ -1,5 +1,6 @@
 package com.pavan.mbs.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +22,14 @@ public class NumbersController {
 	@Autowired
 	private NumberService numberService;
 	
-	@PostMapping("/numbers")
+	@PostMapping("/number")
 	public ResponseEntity<Map<String, String>> addNumber(@RequestBody Numbers number) {
 		return numberService.addNumber(number);
+	}
+
+	@PostMapping("/numbers")
+	public ResponseEntity<Map<String, String>> addNumbers(@RequestBody List<Numbers> numbers) {
+		return numberService.addNumbers(numbers);
 	}
 	
 	@GetMapping("/numbers")
@@ -31,12 +37,12 @@ public class NumbersController {
 		return numberService.getNumbers();
 	}
 	
-	@PutMapping("/numbers")
+	@PutMapping("/number")
 	public ResponseEntity<Map<String, String>> updateNumber(@RequestBody Numbers number) {
 		return numberService.updateNumber(number);
 	}
 	
-	@DeleteMapping("/numbers/{id}")
+	@DeleteMapping("/number/{id}")
 	public ResponseEntity<Map<String, String>> deleteNumber(@PathVariable int id) {
 		return numberService.deleteNumber(id);
 	}

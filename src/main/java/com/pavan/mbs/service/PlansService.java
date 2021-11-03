@@ -34,6 +34,14 @@ public class PlansService {
 		body.put("data", planSaved.toString());
 		return new ResponseEntity<>(body, HttpStatus.CREATED);
 	}
+	public ResponseEntity<Map<String, String>> addPlans(List<Plans> plans) {
+		List<Plans> planSaved = plansRepo.saveAll(plans);
+		body.put(message, "Plans Added Successfully");
+		body.put(status, "true");
+		body.put(statusCode, "201");
+		body.put("data", planSaved.toString());
+		return new ResponseEntity<>(body, HttpStatus.CREATED);
+	}
 	public ResponseEntity<Map<String, String>> getPlanById(int id) {
 		Optional<Plans> plan = plansRepo.findById(id);
 		if(plan.isPresent()) {

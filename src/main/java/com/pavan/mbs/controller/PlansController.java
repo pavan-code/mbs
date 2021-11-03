@@ -1,5 +1,6 @@
 package com.pavan.mbs.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,13 @@ public class PlansController {
 	@Autowired
 	private PlansService plansService;
 	
-	@PostMapping("/plans")
+	@PostMapping("/plan")
 	public ResponseEntity<Map<String, String>> addPlan(@RequestBody Plans plan) {
 		return plansService.addPlan(plan);
+	}
+	@PostMapping("/plans")
+	public ResponseEntity<Map<String, String>> addPlans(@RequestBody List<Plans> plans) {
+		return plansService.addPlans(plans);
 	}
 	@GetMapping("/plans")
 	public ResponseEntity<Map<String, String>> getAllPlans() {
@@ -31,7 +36,7 @@ public class PlansController {
 	public ResponseEntity<Map<String, String>> getPlansByOperator(@PathVariable String operator) {
 		return plansService.getPlanByOperator(operator);
 	}
-	@GetMapping("/plans/{id}")
+	@GetMapping("/plan/{id}")
 	public ResponseEntity<Map<String, String>> getPlansById(@PathVariable int id) {
 		return plansService.getPlanById(id);
 	}
