@@ -18,13 +18,10 @@ import com.pavan.mbs.entity.Subscription;
 import com.pavan.mbs.repo.CustomerRepo;
 import com.pavan.mbs.repo.MobileRepo;
 import com.pavan.mbs.repo.PlansRepo;
-import com.pavan.mbs.repo.SubscriptionRepo;
 
 @Service
 public class SubscriptionService {
 
-	@Autowired
-	private SubscriptionRepo subsRepo;
 	@Autowired
 	private CustomerRepo custRepo;
 	@Autowired
