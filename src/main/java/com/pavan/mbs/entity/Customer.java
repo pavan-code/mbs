@@ -31,6 +31,7 @@ public class Customer {
 	@JoinColumn(name = "aid", referencedColumnName = "id")
 	private Address address;
 	private boolean active;
+	private int staffId;
 	
 	public int getId() {
 		return id;
@@ -97,6 +98,12 @@ public class Customer {
 		return "Customer [id=" + id + ", firstname=" + firstname + ", lastname=" + lastname + ", email=" + email
 				+ ", aadharNumber=" + aadharNumber + ", password=" + password + ", mobiles=" + mobiles + ", type="
 				+ type + ", address=" + address + ", active=" + active + "]";
+	}
+	public int getStaffId() {
+		return staffId;
+	}
+	public void setStaffId(int staffId) {
+		this.staffId = staffId;
 	}
 	
 }

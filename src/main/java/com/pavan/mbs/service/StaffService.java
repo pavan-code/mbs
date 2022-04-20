@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.pavan.mbs.entity.Customer;
+import com.pavan.mbs.entity.DataResponse;
 import com.pavan.mbs.repo.CustomerRepo;
 
 @Service
@@ -49,13 +50,9 @@ public class StaffService {
 			return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
 		}
 	}
-	public ResponseEntity<Map<String, String>> getAllStaff() {
+	public DataResponse<Customer> getAllStaff() {
 		List<Customer> customers = customerRepo.findByType("staff");		
-		body.put(message, "List of Staff members");
-		body.put(status, "true");
-		body.put(statusCode, "302");
-		body.put("data", customers.toString());
-		return new ResponseEntity<>(body, HttpStatus.FOUND);
+		return new DataResponse<Customer>(true, 200, "Staff members list", customers, null);		
 	}
 	
 	public ResponseEntity<Map<String, String>> deleteStaff(int id) {

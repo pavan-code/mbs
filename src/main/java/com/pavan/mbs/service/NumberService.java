@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.pavan.mbs.entity.DataResponse;
 import com.pavan.mbs.entity.Numbers;
 import com.pavan.mbs.repo.NumbersRepo;
 
@@ -43,13 +44,13 @@ public class NumberService {
 		return new ResponseEntity<>(body, HttpStatus.CREATED);
 	}
 
-	public ResponseEntity<Map<String, String>> getNumbers() {
+	public DataResponse<Numbers> getNumbers() {
 		List<Numbers> numbers = numberRepo.findAll();
 		body.put(message, "List of mobile numbers");
 		body.put(status, "true");
 		body.put(statusCode, "302");
 		body.put("data", numbers.toString());
-		return new ResponseEntity<>(body, HttpStatus.FOUND);
+		return new DataResponse<Numbers>(true, 200, "All mobile numbers", numbers, null);		
 	}
 
 	public ResponseEntity<Map<String, String>> updateNumber(Numbers number) {

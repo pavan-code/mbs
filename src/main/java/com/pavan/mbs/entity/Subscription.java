@@ -13,8 +13,17 @@ public class Subscription {
 	private int id;
 	private String startDate;
 	private String endDate;
+	private String paymentMethod;
 	private int planId;
 	
+	
+	
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
 	public int getId() {
 		return id;
 	}

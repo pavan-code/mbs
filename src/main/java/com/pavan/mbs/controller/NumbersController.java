@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pavan.mbs.entity.DataResponse;
 import com.pavan.mbs.entity.Numbers;
 import com.pavan.mbs.service.NumberService;
 
 @RestController
+@CrossOrigin("*")
 public class NumbersController {
 
 	@Autowired
@@ -33,7 +36,7 @@ public class NumbersController {
 	}
 	
 	@GetMapping("/numbers")
-	public ResponseEntity<Map<String, String>> getNumbers() {
+	public DataResponse<Numbers> getNumbers() {
 		return numberService.getNumbers();
 	}
 	

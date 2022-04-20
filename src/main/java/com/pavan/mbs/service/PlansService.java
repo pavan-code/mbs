@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-
+import com.pavan.mbs.entity.DataResponse;
 import com.pavan.mbs.entity.Plans;
 import com.pavan.mbs.repo.PlansRepo;
 
@@ -26,13 +26,13 @@ public class PlansService {
 	
 	Map<String, String> body = new HashMap<>();
 	
-	public ResponseEntity<Map<String, String>> addPlan(Plans plan) {
-		Plans planSaved = plansRepo.save(plan);
-		body.put(message, "Plan Added Successfully");
-		body.put(status, "true");
-		body.put(statusCode, "201");
-		body.put("data", planSaved.toString());
-		return new ResponseEntity<>(body, HttpStatus.CREATED);
+	public DataResponse<Plans> addPlan(Plans plan) {
+		Plans planSaved = plansRepo.save(plan);		
+		return new DataResponse<Plans>(true, 201, "Plan added Successfully", null, planSaved);
+	}
+	public DataResponse<Plans> deletePlan(int id) {
+		plansRepo.deleteById(id);
+		return new DataResponse<Plans>(true, 201, "Plan deleted Successfully", null, null);
 	}
 	public ResponseEntity<Map<String, String>> addPlans(List<Plans> plans) {
 		List<Plans> planSaved = plansRepo.saveAll(plans);
@@ -42,36 +42,21 @@ public class PlansService {
 		body.put("data", planSaved.toString());
 		return new ResponseEntity<>(body, HttpStatus.CREATED);
 	}
-	public ResponseEntity<Map<String, String>> getPlanById(int id) {
+	public Plans getPlanById(int id) {
 		Optional<Plans> plan = plansRepo.findById(id);
 		if(plan.isPresent()) {
-			body.put(message, "Plan details found");
-			body.put(status, "true");
-			body.put(statusCode, "302");
-			body.put("data", plan.get().toString());
-			return new ResponseEntity<>(body, HttpStatus.FOUND);			
+			return plan.get();			
 		} else {
-			body.put(message, "Plan details not found");
-			body.put(status, "false");
-			body.put(statusCode, "404");
-			body.put("data", null);
-			return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+			return new Plans();
 		}
 	} 
-	public ResponseEntity<Map<String, String>> getAllPlans() {
-		List<Plans> plans = plansRepo.findAll();
-		body.put(message, "All Mobile plans");
-		body.put(status, "true");
-		body.put(statusCode, "302");
-		body.put("data", plans.toString());
-		return new ResponseEntity<>(body, HttpStatus.FOUND);
+	public DataResponse<Plans> getAllPlans() {
+		List<Plans> plans = plansRepo.findAll();		
+		return new DataResponse<Plans>(true, 200, "all mobile plans", plans, null);
+		
 	}
-	public ResponseEntity<Map<String, String>> getPlanByOperator(String operator) {
+	public List<Plans> getPlanByOperator(String operator) {
 		List<Plans> plans = plansRepo.findByOperator(operator);
-		body.put(message, "All " + operator + " plans");
-		body.put(status, "true");
-		body.put(statusCode, "200");
-		body.put("data", plans.toString());
-		return new ResponseEntity<>(body, HttpStatus.OK);
+		return plans;
 	}
 }
